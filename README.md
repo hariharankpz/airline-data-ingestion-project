@@ -7,8 +7,12 @@ To design and implement an ETL (Extract, Transform, Load) pipeline that processe
 
 
 
-Tables
+**Tables**
+
+
 **Dimension table** - Contains preloaded airport code
+
+
 **Fact table** - some measurable attributes will be present, where we will be upsert the data
 
 
