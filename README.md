@@ -29,7 +29,7 @@ Automatic Incremental Load: Use job bookmarking in Glue to manage incremental lo
 **Design Consideration:**
 The fact table is denormalized to include all relevant details such as airport name, city, and state. This design choice eliminates the need for repeated joins with the dimensional table, improving query performance and simplifying data analysis.
 
-![](images/image35.png){width="6.5in" height="4.666666666666667in"}
+![](images/image35.png)
 
 The dimension table, this is quite static - slowly changing dimension,
 unlikely to change very frequently.
