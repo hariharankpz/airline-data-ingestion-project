@@ -33,23 +33,17 @@ To design and implement an ETL (Extract, Transform, Load) pipeline that processe
 
 **Step 1. Creating S3 buckets and folder structures.**
 
-Dimension table bucket and daily flight bucket have corresponding files.
+- Create buckets for dimension and daily flight data.
+- **Dimensional Data**: Pre-loaded in S3.
+- **Daily Flight Data**: Loaded daily in a Hive-like partition.
 
-![](images/image15.png){width="6.5in" height="2.375in"}
+Under the daily flights folder, flight data records are loaded on a daily basis under a hive like partition and this file has 1 million records, we can break it down and make multiple parts if needed.
 
-Dimensional data pre-loaded loaded in s3
+![S3 Buckets](images/image15.png)
 
-![](images/image34.png){width="6.5in" height="1.9861111111111112in"}
+![Dimensional Data](images/image34.png)
 
-Under the daily flights folder, flight data records are loaded on a
-daily basis under a hive like partition and this file has 1 million
-records, we can break it down and make multiple parts if needed.
-
-![](images/image52.png){width="6.5in" height="1.9722222222222223in"}
-
-Go to s3 source bucket and enable amazon
-eventbridge.![](images/image58.png){width="6.5in"
-height="2.8333333333333335in"}
+![Daily Flights Data](images/image52.png)
 
 **Step 2. Create Redshift tables and load the dimensional data to the
 dim_table.**
