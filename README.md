@@ -110,9 +110,9 @@ glue job is running even when you are orchestrating this.
 
 Other two endpoints are.
 
-Cloud watch monitoring endpoint
+--Cloud watch monitoring endpoint
 
-VPC access endpoint
+--VPC access endpoint
 
 Go to your AWS glue job, job details and check for the VPC, security
 group and subnet for the **redshift connection under the connections
