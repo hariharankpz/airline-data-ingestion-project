@@ -26,7 +26,7 @@ To design and implement an ETL (Extract, Transform, Load) pipeline that processe
 
 
 
-####Architecture Diagram
+### Architecture Diagram
 ![Architecture Diagram](https://github.com/user-attachments/assets/b631eb2f-cb78-4844-9a08-6c5a9a9c1c2c)
 
 ## Steps to Implement
