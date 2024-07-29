@@ -93,7 +93,7 @@ Configure below mentioned vpc endpoints where our redshift is running
 
 ![](images/image38.png)
 
-1.  **Create s3 endpoint**
+3.1.  **Create s3 endpoint**
 
 ![](images/image23.png)
 
@@ -126,7 +126,7 @@ creating have the same subnet.
 
 ![](images/image8.png)
 
-**2.Selecting the monitoring end point**
+**3.2.Create the monitoring end point**
 
 ![](images/image73.png)
 
@@ -141,7 +141,7 @@ tolerance.
 
 ![](images/image9.png)
 
-**3.Do the same for glue end point as well**
+**3.3.Create glue end point as well**
 
 ![](images/image1.png)
 
@@ -182,16 +182,16 @@ which the data analysis team will be doing their analysis.
 
 **Notes on fact table:**
 
-The fact table that we created is a denormalized table, where we have
-all details.
-
-If we only ingest the s3 directly with some transformation into redshift
-into a fact table with limited data, the data analysis team would need
-to write a join to perform the analysis. So we denormalized the data
-before writing to redshift by combining dim and fact and load to
-redshift for ease of analysis by the data analysis team. In DWH, we
-don\'t load denormalized table, they would need to perform join and this
-will slow down performance
+    The fact table that we created is a denormalized table, where we have
+    all details.
+    
+    If we only ingest the s3 directly with some transformation into redshift
+    into a fact table with limited data, the data analysis team would need
+    to write a join to perform the analysis. So we denormalized the data
+    before writing to redshift by combining dim and fact and load to
+    redshift for ease of analysis by the data analysis team. In DWH, we
+    don\'t load denormalized table, they would need to perform join and this
+    will slow down performance
 
 **Step 5. Now create connections, crawlers and data catalog tables**
 
@@ -223,15 +223,15 @@ Please make sure testing pass before proceeding forward.
 
 3 crawlers and 3 metadata tables are needed.
 
-1.  One for dimensional redshift table - airport_dimensional redshift
-    table (almost Constant data) -\>
-    [[[airline_dim_table_crawler]{.underline}]{.mark}](https://us-east-1.console.aws.amazon.com/glue/home?region=us-east-1#/v2/data-catalog/crawlers/view/airline_dim_table_crawler)
+    1.  One for dimensional redshift table - airport_dimensional redshift
+        table (almost Constant data) -\>
+        [[[airline_dim_table_crawler]{.underline}]{.mark}](https://us-east-1.console.aws.amazon.com/glue/home?region=us-east-1#/v2/data-catalog/crawlers/view/airline_dim_table_crawler)
+    
+    2.  One for s3 flights.csv raw data -\> airline-raw-data-crawler
+    
+    3.  One for flight_fact redshift table.-\> airline-fact-table-crawler
 
-2.  One for s3 flights.csv raw data -\> airline-raw-data-crawler
-
-3.  One for flight_fact redshift table.-\> airline-fact-table-crawler
-
-1.Dimension table crawler. Specify the path as
+**1.Dimension table crawler.** Specify the path as
 dev/airports/airports_dim(redshift table path)
 
 ![](images/image30.png)
@@ -242,11 +242,11 @@ Select the glue role that we created above
 
 ![](images/image28.png){width="6.5in" height="2.75in"}
 
-2.Fact table crawler. Path: dev/airline/.daily_flights_fact.
+**2.Fact table crawler**. Path: dev/airline/.daily_flights_fact.
 
 ![](images/image47.png)
 
-3\. Raw data crawler to crawl data source( s3)
+**3. Raw data crawler to crawl data source( s3)**
 
 ![](images/image16.png)
 
@@ -260,7 +260,7 @@ So 3 crawlers are created
 
 ![](images/image41.png)
 
-Now run and generate catalog tables
+**Now run and generate catalog tables**
 
 Here we have only two catalog tables created. One for raw s3 data and
 another for a dim redshift table. At these both places we have some
