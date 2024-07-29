@@ -50,11 +50,11 @@ dim_table.**
 
 Choose dc2.large node type if you are using a free trial with 2 nodes.
 
-![](images/image61.png){width="6.5in" height="2.763888888888889in"}
+![](images/image61.png)
 
 Enable loading sample data
 
-![](images/image27.png){width="6.5in" height="2.9583333333333335in"}
+![](images/image27.png)
 
 You can choose any of the options here for managing your password. I am
 choosing manual creation.
@@ -63,22 +63,22 @@ Attach the IAM role that is having all required permissions that are
 necessary for the functionality of redshift. I have one IAM role that is
 already created with all required policies.
 
-![](images/image22.png){width="6.5in" height="2.9166666666666665in"}
+![](images/image22.png)
 
 Policies attached with IAM role for redshift.
 
-![](images/image57.png){width="6.5in" height="3.1805555555555554in"}
+![](images/image57.png)
 
 And as you can see, I am selecting the default VPC and security group as
 I don\'t want to create a dedicated VPC since I am using a free trial.
 
-![](images/image56.png){width="6.5in" height="1.4861111111111112in"}
+![](images/image56.png)
 
 And click on create
 
 Redshift cluster is getting created
 
-![](images/image36.png){width="6.5in" height="2.875in"}
+![](images/image36.png)
 
 **Step 3. Creating VPC endpoints**
 
@@ -89,18 +89,18 @@ List of end points that needs to be created
 
 Configure below mentioned vpc endpoints where our redshift is running
 
-![](images/image45.png){width="6.5in" height="1.8055555555555556in"}
+![](images/image45.png)
 
-![](images/image38.png){width="6.5in" height="2.0694444444444446in"}
+![](images/image38.png)
 
 1.  **Create s3 endpoint**
 
-![](images/image23.png){width="6.5in" height="2.9027777777777777in"}
+![](images/image23.png)
 
 Select VPC where you want to add the s3 gateway endpoint.(This should be
 same VPC where your redshift cluster is running)
 
-![](images/image33.png){width="6.5in" height="2.986111111111111in"}
+![](images/image33.png)
 
 And create endpoint
 
@@ -119,16 +119,16 @@ group and subnet for the **redshift connection under the connections
 part** and create required endpoints for those VPC where you need to
 select the security group and subnet properly.
 
-![](images/image42.png){width="6.5in" height="3.6805555555555554in"}
+![](images/image42.png)
 
 So make sure the monitoring end point and other endpoint that we are
 creating have the same subnet.
 
-![](images/image8.png){width="6.5in" height="4.166666666666667in"}
+![](images/image8.png)
 
 **2.Selecting the monitoring end point**
 
-![](images/image73.png){width="6.5in" height="4.097222222222222in"}
+![](images/image73.png)
 
 Selecting the same VPC , subnet and security group where redshift is
 hosted and this you can find out from the glue job details under the
@@ -137,13 +137,13 @@ connections tab.
 Select any two subnets available for high availability and fault
 tolerance.
 
-![](images/image54.png){width="6.5in" height="3.138888888888889in"}
+![](images/image54.png)
 
-![](images/image9.png){width="6.5in" height="2.5277777777777777in"}
+![](images/image9.png)
 
 **3.Do the same for glue end point as well**
 
-![](images/image1.png){width="6.5in" height="3.6944444444444446in"}
+![](images/image1.png)
 
 Note: If redshift is using the default subnet, choose two subnets.
 Choosing multiple subnets in AWS is often done for high availability and
@@ -152,7 +152,7 @@ fault tolerance
 Also we would need to create an IAM role that will enable redshift to
 read data from s3 and load the data into redshift tables.
 
-![](images/image62.png){width="6.5in" height="3.111111111111111in"}
+![](images/image62.png)
 
 We would need to use this IAM role in redshift script to load data
 directly from s3 to redshift dimensional table
@@ -163,22 +163,22 @@ Once the redshift cluster is created, run the DDL queries given in the
 file redshift_create_table_commands.txt. Script will do below two
 processes.
 
-> 1.This will create a fact table named daily_flights_fact and
+> 1.Will create a fact table named daily_flights_fact and
 > dimensional table.
 >
 > 2.Will load the data stored in s3 into a dimensional table.
 
-![](images/image25.png){width="6.5in" height="3.0555555555555554in"}
+![](images/image25.png)
 
 Created and loaded redshift dimensional table successfully with IAM role
 that we created
 
-![](images/image65.png){width="6.5in" height="3.0972222222222223in"}
+![](images/image65.png)
 
 Now create a fact table also, which will be our data landing table in
 which the data analysis team will be doing their analysis.
 
-![](images/image14.png){width="6.5in" height="3.0in"}
+![](images/image14.png)
 
 **Notes on fact table:**
 
@@ -197,12 +197,12 @@ will slow down performance
 
 First create a glue database
 
-![](images/image13.png){width="6.5in" height="1.5416666666666667in"}
+![](images/image13.png)
 
 Create JDBC connections in aws glue for redshift to be used by the
 crawler.
 
-![](images/image32.png){width="6.5in" height="2.5416666666666665in"}
+![](images/image32.png)
 
 Keep the default setting and save.
 
@@ -213,11 +213,11 @@ So add necessary permissions as below.
 
 I have created an IAM role named glue role with following permissions.
 
-![](images/image71.png){width="6.5in" height="2.8194444444444446in"}
+![](images/image71.png)
 
 Please make sure testing pass before proceeding forward.
 
-![](images/image67.png){width="6.5in" height="2.111111111111111in"}
+![](images/image67.png)
 
 **Create Glue crawlers.**
 
@@ -234,23 +234,23 @@ Please make sure testing pass before proceeding forward.
 1.Dimension table crawler. Specify the path as
 dev/airports/airports_dim(redshift table path)
 
-![](images/image30.png){width="6.5in" height="2.736111111111111in"}
+![](images/image30.png)
 
 Select the glue role that we created above
 
-![](images/image49.png){width="6.5in" height="2.638888888888889in"}
+![](images/image49.png)
 
 ![](images/image28.png){width="6.5in" height="2.75in"}
 
 2.Fact table crawler. Path: dev/airline/.daily_flights_fact.
 
-![](images/image47.png){width="6.5in" height="2.4166666666666665in"}
+![](images/image47.png)
 
 3\. Raw data crawler to crawl data source( s3)
 
-![](images/image16.png){width="6.5in" height="1.8055555555555556in"}
+![](images/image16.png)
 
-![](images/image26.png){width="5.21875in" height="6.65625in"}
+![](images/image26.png)
 
 Here select crawl all subfolders. Instead we will enable bookmarking in
 our glue ETL job to load only the unread new files thereby achieving
@@ -258,7 +258,7 @@ incremental load.
 
 So 3 crawlers are created
 
-![](images/image41.png){width="6.5in" height="2.0694444444444446in"}
+![](images/image41.png)
 
 Now run and generate catalog tables
 
@@ -277,21 +277,21 @@ crawler for the fact table.
 
 Now all three tables are created in Glue catalog
 
-![](images/image70.png){width="6.5in" height="2.4583333333333335in"}
+![](images/image70.png)
 
 Before moving to the next steps. Understand below details.
 
 Source is a raw data catalog having one million records.
 
-![](images/image21.png){width="6.5in" height="3.1614588801399823in"}
+![](images/image21.png)
 
 This is how dimensional data looks
-like![](images/image64.png){width="6.5in" height="3.16330271216098in"}
+like![](images/image64.png)
 
 We should write the data to the final table(fact table) in the below
 format.
 
-CREATE TABLE airlines.daily_flights_fact (
+> CREATE TABLE airlines.daily_flights_fact (
 
 carrier VARCHAR(10),
 
@@ -321,7 +321,7 @@ We need to do two joins why?. This will be the actual SQL query to join
 and look up the dim table for airport complete details for deptairport
 id and destination airport id from daily csv data.
 
-SELECT
+> SELECT
 
 flights.Carrier,
 
@@ -372,7 +372,7 @@ flights.DestAirportID = dest_airport.airport_id;
 Select data source - glue catalog table. Source is raw data is having
 one million records
 
-![](images/image20.png){width="6.5in" height="2.5694444444444446in"}
+![](images/image20.png)
 
 **TASK 2: filter-long-dep-delays**
 
@@ -380,14 +380,14 @@ Add Filter to filter departure delay \>= 60 mins (Add a filter to only
 fetch those records where flight is delayed by a certain time. There is
 one column named depdelay in source.)
 
-![](images/image68.png){width="6.5in" height="2.5833333333333335in"}
+![](images/image68.png)
 
 **Task 3 - airline-redshift-dim**
 
 Now select the dimension data catalog table which is the metadata table
 for the redshift dimensional table.
 
-![](images/image44.png){width="6.5in" height="2.875in"}
+![](images/image44.png)
 
 Role should the same role that is attached with the redshift
 
@@ -400,14 +400,14 @@ table - airport_id
 
 Join S3 raw filtered data and dimensional data
 
-![](images/image40.png){width="6.5in" height="2.375in"}
+![](images/image40.png)
 
 **Task 5 - modify_dept_airport_columns**
 
 Now we would like to keep the structure or data schema as that of the
 redshift fact table. So add a **change schema.**
 
-![](images/image11.png){width="6.5in" height="3.2777777777777777in"}
+![](images/image11.png)
 
 We don\'t need date and orginairportid.Beacuse orginairportid is already
 captured while joining and fetching from airportid and thereby fetching
@@ -426,21 +426,21 @@ height="2.75in"}
 
 **Task 7 - Modify-arrival-airport-columns**
 
-![](images/image69.png){width="6.5in" height="2.9027777777777777in"}
+![](images/image69.png)
 
 So our final output schema should match with redshift fact schema
 
 **Task 8: add_target_fact_table**
 
-![](images/image4.png){width="6.5in" height="2.9444444444444446in"}
+![](images/image4.png)
 
 Specify temp bucket for redshift and IAM role associated with redshift.
 
 Now we can Configure job details
 
-![](images/image50.png){width="6.5in" height="3.0694444444444446in"}
+![](images/image50.png)
 
-![](images/image5.png){width="6.5in" height="2.9027777777777777in"}
+![](images/image5.png)
 
 Choose No. worker as 2 and enable job bookmaking for incremental load
 
@@ -453,9 +453,9 @@ part or follow below steps.
 
 Step function:
 
-![](images/image55.png){width="6.5in" height="3.4166666666666665in"}
+![](images/image55.png)
 
-![](images/image18.png){width="6.5in" height="3.2222222222222223in"}
+![](images/image18.png)
 
 Then select the choice state. This is similar to the if else
 condition.What ever the response of get crawler , inside that one there
@@ -466,13 +466,12 @@ state where we are triggering the glue job(this is default)
 Wait state: specify wait interval and after 5 seconds again go to get
 crawler
 
-![](images/image31.png){width="6.5in" height="3.5555555555555554in"}
+![](images/image31.png)
 
 **Next glue job start state**
 
 Add your glue job and enable the task to
-complete.![](images/image10.png){width="6.5in"
-height="3.9583333333333335in"}
+complete.![](images/image10.png)
 
 If the glue job is failing for some reason, we can add error handling,
 go to the error handling part and add error catch, **to send sns
@@ -480,7 +479,7 @@ notification** as failed through SNS publish state.
 
 Please Note : This is before the choice state.
 
-![](images/image37.png){width="6.5in" height="3.0555555555555554in"}
+![](images/image37.png)
 
 Failure in glue jobs can happen at two places. First is when we are
 starting the glue job run , that time exception is happening and
@@ -503,9 +502,9 @@ enabled(Wait for task to be complete) .
 **If job status is SUCCEEDED** then the next state is SNS publish for
 Success.Else SNS state for failure.
 
-![](images/image6.png){width="6.5in" height="3.375in"}
+![](images/image6.png)
 
-![](images/image63.png){width="6.5in" height="2.4583333333333335in"}
+![](images/image63.png)
 
 So the jobRunState parameter will be there in response from the Glue
 StartJobRun state. This will be fetched once the Glue StartJobRun
@@ -513,12 +512,12 @@ state(previous state) finishes its execution.And send to next SNS
 publish for success notification with below configurations where message
 is mentioned "Glue Job Execution is Successful !!"
 
-![](images/image46.png){width="6.5in" height="3.5555555555555554in"}
+![](images/image46.png)
 
 If SUCCEED is not the case, we will send the failed notification with
 the state input message itself.(It have exception string)
 
-![](images/image19.png){width="6.5in" height="4.388888888888889in"}
+![](images/image19.png)
 
 Here we are calling the same SNS service for sending both the success
 and failure state with different messages for success and failure
@@ -526,20 +525,20 @@ scenarios.
 
 Add all necessary permissions to the IAM role for step functions.
 
-![](images/image60.png){width="6.5in" height="2.9305555555555554in"}
+![](images/image60.png)
 
 **Step 9: Create Event bridge Rule**
 
-![](images/image39.png){width="6.5in" height="4.069444444444445in"}
+![](images/image39.png)
 
-![](images/image51.png){width="6.125in" height="5.21875in"}
+![](images/image51.png)
 
-![](images/image3.png){width="6.5in" height="4.291666666666667in"}
+![](images/image3.png)
 
 After making above mentioned configurations event pattern will be auto
 generated
 
-![](images/image29.png){width="6.5in" height="3.875in"}
+![](images/image29.png)
 
 In s3, we will be adding a new folder similar to hive like partition and
 that folder is also an object creation (uploading a s3 file is also an
@@ -548,20 +547,20 @@ object creation).
 What if we want to check whether it is triggered only when a csv file is
 uploaded. Add a suffix to the event pattern like this.
 
-![](images/image48.png){width="6.5in" height="3.0972222222222223in"}
+![](images/image48.png)
 
 Modified event pattern after adding csv suffix
 
-![](images/image2.png){width="6.5in" height="2.6527777777777777in"}
+![](images/image2.png)
 
 Add target in step function
 
-![](images/image72.png){width="6.5in" height="3.9027777777777777in"}
+![](images/image72.png)
 
 Add all necessary permissions to the role that you are using for the
 step function.
 
-![](images/image7.png){width="6.5in" height="2.2222222222222223in"}
+![](images/image7.png)
 
 Now we can start the testing.
 
@@ -572,21 +571,21 @@ the Event bridge rule through event notification and the event bridge
 will trigger the step function. Step function will trigger the glue job
 and ingest data into the redshift target table.
 
-![](images/image43.png){width="6.5in" height="5.069444444444445in"}
+![](images/image43.png)
 
 Before uploading the file, no data records in redshift fact table
 
-![](images/image24.png){width="6.5in" height="2.736111111111111in"}
+![](images/image24.png)
 
 Job failed due to some error and we are getting the email through SNS
 with error
 
-![](images/image12.png){width="6.5in" height="2.3055555555555554in"}
+![](images/image12.png)
 
 After the successful run, records are loaded in the redshift fact table.
 
-![](images/image66.png){width="6.5in" height="2.9305555555555554in"}
+![](images/image66.png)
 
-![](images/image17.png){width="6.5in" height="3.013888888888889in"}
+![](images/image17.png)
 
-![](images/image53.png){width="6.5in" height="2.9722222222222223in"}
+![](images/image53.png)
