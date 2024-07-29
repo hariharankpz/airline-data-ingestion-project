@@ -1,40 +1,32 @@
-****Project Requirement: Building an ETL Pipeline for Daily Flight Data using AWS Glue, Redshift, and Step Functions.****
+# Project Requirement: Building an ETL Pipeline for Daily Flight Data using AWS Glue, Redshift, and Step Functions
 
+## Objective
 
-**Objective:**
 To design and implement an ETL (Extract, Transform, Load) pipeline that processes daily flight data, enriching it with dimensional data, and loads it into Amazon Redshift for analysis. The pipeline will be triggered by new data arrivals in S3, managed through AWS Step Functions, and monitored via SNS notifications.
 
+## Tables
 
+### Dimension Table
+- Contains preloaded airport codes.
 
+### Fact Table
+- Contains measurable attributes where data will be upserted.
 
-**Tables**
+## Key Points
 
+### Crawler Completion Check
+- **Issue**: If the Glue job is triggered before the crawler completes, it may load outdated or empty data.
+- **Solution**: Implement a waiting mechanism in the AWS Step Function to ensure that the crawler has completed its execution before triggering the Glue job. This ensures that the Glue Data Catalog is up-to-date and reflects the latest data in S3.
 
-**Dimension table** - Contains preloaded airport code
+### Incremental Load
+- **Automatic Incremental Load**: Use job bookmarking in Glue to manage incremental loads based on Hive-like partitioning in S3. This allows the Glue job to process only new or updated data, optimizing performance and resource usage.
 
+### Denormalized Fact Table Design
+- **Design Consideration**: The fact table is denormalized to include all relevant details such as airport name, city, and state. This design choice eliminates the need for repeated joins with the dimensional table, improving query performance and simplifying data analysis.
 
-**Fact table** - some measurable attributes will be present, where we will be upsert the data
+![Architecture Diagram](https://github.com/user-attachments/assets/b631eb2f-cb78-4844-9a08-6c5a9a9c1c2c)
 
-
-
-
-****Key Points:****
-
-**Crawler Completion Check:**
-Issue: If the Glue job is triggered before the crawler completes, it may load outdated or empty data. Solution: Implement a waiting mechanism in the AWS Step Function to ensure that the crawler has completed its execution before triggering the Glue job. This ensures that the Glue Data Catalog is up-to-date and reflects the latest data in S3. Job Bookmarking for 
-
-**Incremental Load:**
-Automatic Incremental Load: Use job bookmarking in Glue to manage incremental loads based on Hive-like partitioning in S3. This allows the Glue job to process only new or updated data, optimizing performance and resource usage. Denormalized Fact Table Design:
-
-**Design Consideration:**
-The fact table is denormalized to include all relevant details such as airport name, city, and state. This design choice eliminates the need for repeated joins with the dimensional table, improving query performance and simplifying data analysis.
-
-
-![image](https://github.com/user-attachments/assets/b631eb2f-cb78-4844-9a08-6c5a9a9c1c2c)
-                                    **Architecture diagram**
-
-The dimension table, this is quite static - slowly changing dimension,
-unlikely to change very frequently.
+## Steps to Implement
 
 **Step 1. Creating S3 buckets and folder structures.**
 
