@@ -24,6 +24,9 @@ To design and implement an ETL (Extract, Transform, Load) pipeline that processe
 ### Denormalized Fact Table Design
 - **Design Consideration**: The fact table is denormalized to include all relevant details such as airport name, city, and state. This design choice eliminates the need for repeated joins with the dimensional table, improving query performance and simplifying data analysis.
 
+
+
+####Architecture Diagram
 ![Architecture Diagram](https://github.com/user-attachments/assets/b631eb2f-cb78-4844-9a08-6c5a9a9c1c2c)
 
 ## Steps to Implement
