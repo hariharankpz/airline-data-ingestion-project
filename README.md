@@ -446,86 +446,49 @@ Choose No. worker as 2 and enable job bookmaking for incremental load
 
 Save it.
 
-**Step 7: Creating step function**
+# Step 7: Creating Step Function
 
-You can copy the code and paste the step function provided into the code
-part or follow below steps.
+You can copy the code and paste the step function provided into the script part, and this will create the below state machine.
 
-Step function:
+![State Machine](https://github.com/user-attachments/assets/838884c4-4f1b-4cb3-99a2-697862a1aae8)
 
-![](images/image55.png)
+Make sure to replace the Glue job name, crawler name, and SNS topic ARN with yours.
 
-![](images/image18.png)
+## Main Steps Involved in the Step Function
 
-Then select the choice state. This is similar to the if else
-condition.What ever the response of get crawler , inside that one there
-will be a parameter named crawler.state. Check if its running . if yes
-enter into wait state continue till it finishes run and move to next
-state where we are triggering the glue job(this is default)
+### Choice State
+This is similar to the if-else condition. Whatever the response of `GetCrawler`, inside that one there will be a parameter named `crawler.state`. Check if it's running. If yes, enter into the wait state, continue till it finishes running, and move to the next state where we are triggering the Glue job (this is default).
 
-Wait state: specify wait interval and after 5 seconds again go to get
-crawler
+### Wait State
+Specify the wait interval and after 5 seconds, again go to `GetCrawler`.
 
-![](images/image31.png)
+### Glue Job Start State
+Add your Glue job and enable the task to complete.
 
-**Next glue job start state**
+If the Glue job is failing for some reason, we can add error handling. Go to the error handling part and add error catch to send SNS notification as failed through `SNS Publish` state.
 
-Add your glue job and enable the task to
-complete.![](images/image10.png)
+Failure in Glue jobs can happen at two places:
+1. When we are starting the Glue job run, if an exception occurs, directly capture the exception and send the failed notification through SNS. This is configured in the above step.
+2. After the job has been started and during some transformation operations in the Glue job, if the job fails for some reason, capture and publish the failed notification through SNS again. We can use the same `SNS Publish` state here.
 
-If the glue job is failing for some reason, we can add error handling,
-go to the error handling part and add error catch, **to send sns
-notification** as failed through SNS publish state.
+Also, when the job is successful, publish to the success SNS state. This can be configured through another choice state.
 
-Please Note : This is before the choice state.
+### Choice State
+Wait for the Glue job task to complete based on the toggle that we enabled (Wait for task to be complete).
 
-![](images/image37.png)
+- **If job status is SUCCEEDED**: The next state is SNS publish for success. 
+- **Else**: SNS state for failure.
 
-Failure in glue jobs can happen at two places. First is when we are
-starting the glue job run , that time exception is happening and
-directly we will capture the exception and send the failed notification
-through SNS and this is what we configured in the above step. The second
-one will be after the job has been started and during some
-transformation operations in the glue job, the job failed for some
-reason, that needs to be captured and publish the failed notification
-through SNS again.We can make use of the same publish SNS state here.
-Also when the job is successful, that needs to be published to succeed
-SNS state.
+The `jobRunState` parameter will be there in the response from the Glue `StartJobRun` state. This will be fetched once the Glue `StartJobRun` state (previous state) finishes its execution. Then send to the next SNS publish for success notification with the configuration where the message is mentioned as "Glue Job Execution is Successful!!".
 
-This can be configured through another choice state.
+If `SUCCEED` is not the case, send the failed notification with the state input message itself (it has the exception string).
 
-**Choice state:**
-
-Wait for the glue job task to complete based on the toggle that we
-enabled(Wait for task to be complete) .
-
-**If job status is SUCCEEDED** then the next state is SNS publish for
-Success.Else SNS state for failure.
-
-![](images/image6.png)
-
-![](images/image63.png)
-
-So the jobRunState parameter will be there in response from the Glue
-StartJobRun state. This will be fetched once the Glue StartJobRun
-state(previous state) finishes its execution.And send to next SNS
-publish for success notification with below configurations where message
-is mentioned "Glue Job Execution is Successful !!"
-
-![](images/image46.png)
-
-If SUCCEED is not the case, we will send the failed notification with
-the state input message itself.(It have exception string)
-
-![](images/image19.png)
-
-Here we are calling the same SNS service for sending both the success
-and failure state with different messages for success and failure
-scenarios.
+Here we are calling the same SNS service for sending both the success and failure state with different messages for success and failure scenarios.
 
 Add all necessary permissions to the IAM role for step functions.
 
-![](images/image60.png)
+![Permissions](images/image60.png)
+
 
 **Step 9: Create Event bridge Rule**
 
