@@ -490,7 +490,7 @@ Add all necessary permissions to the IAM role for step functions.
 ![Permissions](images/image60.png)
 
 
-**Step 9: Create Event bridge Rule**
+**Step 8: Create Event bridge Rule**
 
 ![](images/image39.png)
 
@@ -525,7 +525,7 @@ step function.
 
 ![](images/image7.png)
 
-Now we can start the testing.
+**Step 9: Now we can start the testing.**
 
 Clear data from redshift fact table and delete source s3 file.
 
@@ -549,6 +549,5 @@ After the successful run, records are loaded in the redshift fact table.
 
 ![](images/image66.png)
 
-![](images/image17.png)
 
 ![](images/image53.png)
